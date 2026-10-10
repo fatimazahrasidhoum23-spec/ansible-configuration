@@ -1,0 +1,8 @@
+---
+- name: Install and configure MySQL
+  hosts: webservers
+  become: yes
+  roles:
+    - mysql
+  vars_files:
+    - vars/vault.yml

@@ -1,0 +1,14 @@
+# Ne pas pusher les clés SSH
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+
+# Fichier vault (déjà chiffré mais par précaution)
+# vars/vault.yml
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

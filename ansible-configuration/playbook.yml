@@ -1,0 +1,24 @@
+---
+- name: Installer et configurer Nginx
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Installer Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Démarrer et activer Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Vérifier la version de Nginx
+      command: nginx -v
+      register: nginx_ver
+      changed_when: false
+
+    - name: Afficher la version Nginx
+      debug:
+        msg: "{{ nginx_ver.stderr }}"

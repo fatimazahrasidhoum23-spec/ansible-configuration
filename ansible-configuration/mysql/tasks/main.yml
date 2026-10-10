@@ -1,0 +1,32 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install MySQL server
+  apt:
+    name: mysql-server
+    state: present
+
+- name: Ensure MySQL service is running
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  ignore_errors: yes
+
+- name: Update MySQL root password
+  ansible.builtin.command:
+    cmd: mysqladmin -u root password "{{ mysql_root_password }}"
+  when: mysql_root_password is defined
+  ignore_errors: yes
+
+- name: Copy MySQL configuration file
+  template:
+    src: my.cnf.j2
+    dest: /etc/mysql/my.cnf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart MySQL
